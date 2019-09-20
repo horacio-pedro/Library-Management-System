@@ -1,14 +1,14 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "description": "",
+  "description": "LMS (Library Management System)",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Horacio Pedro",
+  "license": "MIT",
   "dependencies": {
     "async-validator-2": "^1.0.0",
     "body-parser": "^1.18.3",
@@ -17,5 +17,21 @@
     "express-session": "^1.15.6",
     "mysql": "^2.15.0",
     "nodemon": "^1.17.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/horacio-pedro/Library-Management-System.git"
+  },
+  "keywords": [
+    "CELFAA",
+    "Library",
+    "Management",
+    "System",
+    "Library Management System"
+  ],
+  "bugs": {
+    "url": "https://github.com/horacio-pedro/Library-Management-System/issues"
+  },
+  "homepage": "https://github.com/horacio-pedro/Library-Management-System#readme"
 }
