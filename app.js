@@ -3,22 +3,21 @@ const express = require('express');
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const port = 3000;
 
 //common controllers
-const signup = require('./controllers/signup');
-const login = require('./controllers/login');
-const logout = require('./controllers/logout');
+const signup = require('./controllers/signupController');
+const login = require('./controllers/loginController');
+const logout = require('./controllers/logoutController');
 
 //admin controllers
-const admin = require('./controllers/admin');
+const admin = require('./controllers/adminController');
 
 
 //customer controllers
-const customer = require('./controllers/customer');
+const customer = require('./controllers/customerController');
 
 //configure
 app.set('view engine', 'ejs');
