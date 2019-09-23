@@ -1,21 +1,24 @@
 //declaration
-var express = require('express');
-var expressSession = require('express-session');
-var bodyParser = require('body-parser');
-var app = express();
-var port = 3000;
+const express = require('express');
+const expressSession = require('express-session');
+const bodyParser = require('body-parser');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const port = 3000;
 
 //common controllers
-var signup = require('./controllers/signup');
-var login = require('./controllers/login');
-var logout = require('./controllers/logout');
+const signup = require('./controllers/signup');
+const login = require('./controllers/login');
+const logout = require('./controllers/logout');
 
 //admin controllers
-var admin = require('./controllers/admin');
+const admin = require('./controllers/admin');
 
 
 //customer controllers
-var customer = require('./controllers/customer');
+const customer = require('./controllers/customer');
 
 //configure
 app.set('view engine', 'ejs');
@@ -23,8 +26,7 @@ app.set('view engine', 'ejs');
 //middlewares
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressSession({secret: 'my top secret pass', resave: false, saveUninitialized: true}));
-app.use('/css', express.static(__dirname + '/css'));
-app.use('/images', express.static(__dirname + '/images'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', function(req, res, next){
 

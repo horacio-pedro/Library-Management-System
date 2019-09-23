@@ -1,4 +1,4 @@
-var db = require.main.require('./models/config');
+var db = require.main.require('./config/conn');
 
 var getAll = (callback) => {
     var sql = "SELECT * FROM books";

@@ -1,4 +1,4 @@
-var db = require.main.require('./models/config');
+var db = require.main.require('./config/conn');
 
 var validateUser = (email, password, callback) => {
     var sql = "SELECT * FROM users WHERE email = ? AND password = ?";
