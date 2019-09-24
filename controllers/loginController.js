@@ -22,7 +22,7 @@ router.post('/', (req, res)=>{
         if(!errors){
             userModel.validateUser(req.body.email, req.body.password, function(result){
                 if(!result){
-                  res.render('login', {errs: [{message: 'Invalid email or password'}]});
+                  res.render('login', {errs: [{message: 'Email ou palavra-passe inválida'}]});
                 }
                 else{
                   console.log(result);

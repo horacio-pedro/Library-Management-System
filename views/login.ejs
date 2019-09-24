@@ -1,1 +1,77 @@
 <%-include('partials/header.html')%>
+    <div class="page-ath-wrap">
+        <div class="page-ath-content">
+            <div class="page-ath-header">
+                <a class="page-ath-logo" href="./">
+                    <img src="/img/logo.png" srcset="/img/logo2x.png" alt="logo">
+                </a>
+            </div>
+            <div class="page-ath-form">
+                <div class="page-ath-heading">
+                    Entrar <small>entre com a sua conta Read Now</small>
+                </div>
+                <%-include('partials/_msg.html')%>
+                <form method="POST">
+                    <div class="input-item">
+                        <input type="email" name="email" placeholder="Seu Email" class="input-bordered">
+                    </div>
+                    <div class="input-item">
+                        <input type="password" name="password" placeholder="Palavra-passe" class="input-bordered">
+                    </div>
+                    <div class="d-flex justify-content-between align-tems-center">
+                        <div class="input-item text-left">
+                            <input type="checkbox" id="remember-me" class="input-checkbox input-checkbox-md">
+                            <label for="remember-me">Lembrar-me</label>
+                        </div>
+                        <div>
+                            <a href="#">Esqueceu a palavra-passe?</a>
+                            <div class="gaps-2x"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                </form>
+                <div class="sap-text">
+                    <span>Ou Entre Com</span>
+                </div>
+                <ul class="row guttar-20px guttar-vr-20px">
+                    <li class="col">
+                        <a href="#" class="btn btn-outline btn-dark btn-facebook btn-block">
+                            <em class="fab fa-facebook-f"></em>
+                            <span>Facebook</span>
+                        </a>
+                    </li>
+                    <li class="col">
+                        <a href="#" class="btn btn-outline btn-dark btn-google btn-block">
+                            <em class="fab fa-google"></em>
+                            <span>Google</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="gaps-2x"></div>
+                <div class="gaps-2x"></div>
+                <div class="form-note">
+                    Não tens uma conta? <a href="/signup"><strong>Criar conta</strong></a>
+                </div>
+            </div>
+            <div class="page-ath-footer">
+                <ul class="footer-links">
+                    <li><a href="#">Privacidade</a></li>
+                    <li><a href="#">Termos</a></li>
+                    <li>
+                        &copy; 2019-<script type="text/javascript">
+                            document.write(new Date().getFullYear());
+                        </script> 
+                        Read Now <small style="font-size: 0.5em">by CELFAA</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-ath-gfx">
+            <div class="w-100 d-flex justify-content-center">
+                <div class="col-md-8 col-xl-5">
+                    <img src="/img/ath-gfxi.png" alt="imagem">
+                </div>
+            </div>
+        </div>
+    </div>
+<%-include('partials/footer.html')%>

@@ -3,6 +3,8 @@ const express = require('express');
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
@@ -20,7 +22,19 @@ const admin = require('./controllers/adminController');
 const customer = require('./controllers/customerController');
 
 //configure
+app.use(session({
+	secret: "SystemSecurity#2019",
+	resave: true,
+	saveUninitialized: true,
+	cookie: { secure: true }
+}))
 app.set('view engine', 'ejs');
+app.use(flash());
+
+app.use((req, res, next) => {
+	res.locals.message = req.flash('message');
+	next();
+});
 
 //middlewares
 app.use(bodyParser.urlencoded({extended: false}));
