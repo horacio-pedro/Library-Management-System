@@ -4,10 +4,8 @@ const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const flash = require('connect-flash');
-const session = require('express-session');
 
 const app = express();
-const port = 3000;
 
 //common controllers
 const signup = require('./controllers/signupController');
@@ -38,7 +36,11 @@ app.use((req, res, next) => {
 
 //middlewares
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(expressSession({secret: 'my top secret pass', resave: false, saveUninitialized: true}));
+app.use(expressSession({
+	secret: 'my top secret pass', 
+	resave: false, 
+	saveUninitialized: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', function(req, res, next){
@@ -73,6 +75,7 @@ app.use('/admin', admin);
 app.use('/customer', customer);
 
 //server start
-app.listen(port, ()=>{
-    console.log(`Server running on port ${port}`);
+const PORT = 3000;
+app.listen(PORT, ()=>{
+    console.log(`Server running on port ${PORT}`);
 });
