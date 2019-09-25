@@ -21,18 +21,6 @@ const customer = require('./controllers/customerController');
 
 //configure
 app.set('view engine', 'ejs');
-app.use(session({
-	secret: "SystemSecurity#2019",
-	resave: true,
-	saveUninitialized: true,
-	cookie: { secure: true }
-}))
-app.use(flash());
-
-app.use((req, res, next) => {
-	res.locals.message = req.flash('message');
-	next();
-});
 
 //middlewares
 app.use(bodyParser.urlencoded({extended: false}));
