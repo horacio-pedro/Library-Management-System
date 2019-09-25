@@ -22,13 +22,13 @@ const admin = require('./controllers/adminController');
 const customer = require('./controllers/customerController');
 
 //configure
+app.set('view engine', 'ejs');
 app.use(session({
 	secret: "SystemSecurity#2019",
 	resave: true,
 	saveUninitialized: true,
 	cookie: { secure: true }
 }))
-app.set('view engine', 'ejs');
 app.use(flash());
 
 app.use((req, res, next) => {

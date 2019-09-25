@@ -3,17 +3,17 @@ module.exports = {
         create: {
             name: {
                 required: true,
-                message: 'Name cannot be empty'
+                message: 'O campo nome não pode ser vasio'
             },
             email: {
                 required: true,
                 type: 'email',
-                message: 'Invalid email'
+                message: 'Eamil inválido'
             },
             phone: {
                 required: true,
                 len: 11,
-                message: 'Invalid Phone'
+                message: 'Número inválido'
             },
             password: {
                 required: true,
