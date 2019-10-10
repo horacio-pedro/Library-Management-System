@@ -28,11 +28,11 @@ router.post('/', (req, res)=>{
                   console.log(result);
                   if(result.is_admin == 1){
                       req.session.admin = result.user_id;
-                      res.redirect('/admin/home');
+                      res.redirect('/admin/dashboard');
                   }
                   else{
                       req.session.customer = result.user_id;
-                      res.redirect('/customer/home');
+                      res.redirect('/customer/dashboard');
                   }
                 }
             });

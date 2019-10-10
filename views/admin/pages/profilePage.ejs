@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="row">
+        <div class="main-content col-lg-8">
+            <div class="content-area card">
+                <div class="card-innr">
+                    <div class="card-head">
+                        <h4 class="card-title">Meu Perfil</h4>
+                    </div>
+                    <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+                        <li class="nav-item"><a class="nav-link active show" data-toggle="tab"
+                                href="#personal-data">Dados Pessoais</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">Editar Perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#password">Alterar Palavra-passe</a></li>
+                    </ul><!-- .nav-tabs-line -->
+                    <div class="tab-content" id="profile-details">
+                        <div class="tab-pane fade active show" id="personal-data">
+                            <form action="#">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-item input-with-label">
+                                            <label for="full-name" class="input-item-label">Nome Completo</label>
+                                            <input class="input-bordered" value="<%=res.name%>" disabled>
+                                        </div>
+                                        <!-- .input-item -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-item input-with-label">
+                                            <label for="email-address" class="input-item-label">Email</label>
+                                            <input class="input-bordered" value="<%=res.email%>" disabled>
+                                        </div>
+                                        <!-- .input-item -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-item input-with-label">
+                                            <label for="mobile-number" class="input-item-label">Número Telemóvel</label>
+                                                <input class="input-bordered" value="<%=res.phone%>" disabled>
+                                            </div><!-- .input-item -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-item input-with-label">
+                                            <label for="nip" class="input-item-label">NIP</label>
+                                            <input class="input-bordered" value="<%=res.nip%>" disabled>
+                                        </div><!-- .input-item -->
+                                    </div><!-- .col -->
+                                    <div class="col-md-6">
+                                        <div class="input-item input-with-label">
+                                            <label for="patent" class="input-item-label">Patente</label>
+                                                <input class="input-bordered" value="<%=res.patent%>" disabled>
+                                        </div><!-- .input-item -->
+                                    </div><!-- .col -->
+                                    <div class="col-md-6">
+                                        <div class="input-item input-with-label">
+                                            <label for="gender" class="input-item-label">Género</label>
+                                                <input class="input-bordered" value="<%=res.gender%>" disabled>
+                                        </div><!-- .input-item -->
+                                    </div><!-- .col -->
+                                    <div class="col-md-12">
+                                        <div class="input-item input-with-label">
+                                            <label for="date-of-birth" lass="input-item-label">Endereço</label>
+                                            <input class="input-bordered" value="<%=res.address%>" disabled>
+                                        </div><!-- .input-item -->
+                                    </div><!-- .col -->
+                                </div><!-- .row -->
+                                <div class="gaps-1x"></div><!-- 10px gap -->
+                                <div class="d-sm-flex justify-content-between align-items-center"><button
+                                        class="btn btn-primary-alt">Editar Perfil</button>
+                                    <div class="gaps-2x d-sm-none"></div><span class="text-success"><em
+                                            class="ti ti-check-box"></em> Perfil Actualizado</span>
+                                </div>
+                            </form><!-- form -->
+                        </div><!-- .tab-pane -->
+                        <div class="tab-pane fade text-center" id="settings">
+                            <a href="/admin/profile/edit" class="btn btn-primary-alt"><i class="ti ti-pencil-alt"></i> Atualizar os meus dados pessoais</a>
+                        </div><!-- .tab-pane -->
+                        <div class="tab-pane fade text-center" id="password">
+                            <a href="/admin/changepass" class="btn btn-primary-alt"><i class="ti ti-lock"></i> Atualizar os meus dados pessoais</a>
+                        </div><!-- .tab-pane -->
+                    </div><!-- .tab-content -->
+                </div><!-- .card-innr -->
+            </div><!-- .card -->
+        </div><!-- .col -->
+        <div class="aside sidebar-right col-lg-4">
+            <div class="account-info card">
+                <div class="card-innr">
+                    <h6 class="card-title card-title-sm">Estado da Conta</h6>
+                    <ul class="btn-grp">
+                        <li><a class="btn btn-auto btn-xs btn-success" style="color:#FFF">Email Verificado</a></li>
+                        <li><a class="btn btn-auto btn-xs btn-warning" style="color:#FFF">Acesso Permitido</a></li>
+                    </ul>
+                    <div class="gaps-2-5x"></div>
+                    <h6 class="card-title card-title-sm">Nível de Acesso</h6>
+                    <div class="d-flex justify-content-between"><span><span>Administrador</span> <em
+                                class="fas fa-info-circle text-exlight" data-toggle="tooltip" data-placement="bottom"
+                                title="" data-original-title="Acesso total ao sistema"></em></span><a href="admin/profile/edit"
+                            data-toggle="modal" data-target="#edit-wallet" class="link link-ucap">Editar</a></div>
+                </div>
+            </div>
+        </div><!-- .col -->
+    </div><!-- .container -->
+</div>

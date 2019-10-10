@@ -1,0 +1,219 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="token-statistics card card-token height-auto">
+                <div class="card-innr">
+                    <div class="token-balance token-balance-with-icon">
+                        <div class="token-balance-icon">
+                            <img src="/img/logo-sm-light.png" alt="logo">
+                        </div>
+                        <div class="token-balance-text">
+                            <h6 class="card-sub-title">Total de Lívros</h6>
+                            <span class="lead"><%=bk%></span>
+                        </div>
+                    </div>
+                    <div class="token-balance token-balance-s2">
+                        <h6 class="card-sub-title">Livros Físico vs Digital</h6>
+                        <ul class="token-balance-list">
+                            <li class="token-balance-sub"><span class="lead"><%=bk%></span><span
+                                    class="sub">TOTAL</span>
+                            </li>
+                            <li class="token-balance-sub"><span class="lead"><%=bk%></span><span
+                                    class="sub">FÍSICO</span>
+                            </li>
+                            <li class="token-balance-sub"><span class="lead">0</span><span class="sub">DIGITAL</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .col -->
+        <div class="col-lg-8">
+            <div class="token-information card card-full-height">
+                <div class="row no-gutters height-100">
+                    <div class="col-md-6 text-center">
+                        <div class="token-info">
+                            <img class="token-info-icon" src="/img/logo-sm.png" alt="logo-sm">
+                            <div class="gaps-2x"></div>
+                            <h1 class="token-info-head text-light">Lívros Solicitados</h1>
+                            <h5 class="token-info-sub">Total = <%=brwd%></h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="token-info bdr-tl">
+                            <div>
+                                <ul class="token-info-list">
+                                    <li><span>Total Utilizadores:</span> <%=usr%></li>
+                                    <li><span>Adicionar:</span><a href="/admin/customers/add"><i
+                                                class="fas fa-plus-circle"></i></a></li>
+                                </ul>
+                                <a href="#" class="btn btn-primary">
+                                    <em class="fas fa-angle-double-right mr-3"></em>Ver Todos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="token-transaction card card-full-height">
+                <div class="card-innr">
+                    <div class="card-head has-aside">
+                        <h4 class="card-title">Inventário Rápido</h4>
+                        <div class="card-opt"><a href="transactions.html" class="link ucap">FÍSICO <em
+                                    class="fas fa-angle-right ml-2"></em></a></div>
+                    </div>
+                    <table class="table tnx-table">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Título</th>
+                                <th class="d-none d-sm-table-cell tnx-date">Total</th>
+                                <th class="tnx-type">
+                                    <div class="tnx-type-text"></div>
+                                </th>
+                            </tr><!-- tr -->
+                        </thead><!-- thead -->
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="data-state data-state-approved"></div><span class="lead">+
+                                            Solicitado</span>
+                                    </div>
+                                </td>
+                                <td><span><span class="lead"><%=mrb.title%></span><span class="sub"><em
+                                                class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                                                data-original-title="AUTOR: <%=mrb.author%>"></em></span></span></td>
+                                <td class="d-none d-sm-table-cell tnx-date"><span
+                                        class="lead"><%=mrb.magnitude%></span><span class="sub">VEZEZ</span></td>
+                                <td class="tnx-type">
+                                    <a href="/admin/">
+                                        <span class="tnx-type-md badge badge-outline badge-success badge-md"><i
+                                                class="ti ti-search"></i></span><span
+                                            class="tnx-type-sm badge badge-sq badge-outline badge-success badge-md">P</span>
+                                    </a>
+                                </td>
+                            </tr><!-- tr -->
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="data-state data-state-progress"></div><span class="lead">+
+                                            Solicitado/30 dias</span>
+                                    </div>
+                                </td>
+                                <td><span><span class="lead"><%=mbb.title%></span><span class="sub"><em
+                                                class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                                                data-original-title="AUTOR: <%=mbb.author%>"></em></span></span></td>
+                                <td class="d-none d-sm-table-cell tnx-date"><span
+                                        class="lead"><%=mbb.magnitude%></span><span class="sub">VEZEZ</span></td>
+                                <td class="tnx-type">
+                                    <a href="/admin/">
+                                        <span class="tnx-type-md badge badge-outline badge-success badge-md"><i
+                                                class="ti ti-search"></i></span><span
+                                            class="tnx-type-sm badge badge-sq badge-outline badge-success badge-md">P</span>
+                                    </a>
+                                </td>
+                            </tr><!-- tr -->
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="data-state data-state-pending"></div><span class="lead">Total
+                                            Solicitações/30 dias</span>
+                                    </div>
+                                </td>
+                                <td><span><span class="lead">Últimos</span><span class="sub">30 DIAS </span></span></td>
+                                <td class="d-none d-sm-table-cell tnx-date"><span class="lead"><%=mb%></span><span
+                                        class="sub">VEZEZ</span></td>
+                                <td class="tnx-type">
+                                    <a href="/admin/">
+                                        <span class="tnx-type-md badge badge-outline badge-success badge-md"><i
+                                                class="ti ti-search"></i></span><span
+                                            class="tnx-type-sm badge badge-sq badge-outline badge-success badge-md">P</span>
+                                    </a>
+                                </td>
+                            </tr><!-- tr -->
+                        </tbody><!-- tbody -->
+                    </table><!-- .table -->
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-5">
+            <div class="token-calculator card-timeline card card-full-height">
+                <div class="card-innr">
+                    <div class="card-head">
+                        <h4 class="card-title">Leitura Online</h4>
+                        <p class="card-title-text"><span class="sub">Livros Digital</span> Adionados Recemente.</p>
+                    </div>
+                    <div class="timeline-wrap" id="timeline-notify">
+                        <div data-simplebar="init">
+                            <div class="simplebar-track vertical" style="visibility: hidden;">
+                                <div class="simplebar-scrollbar"></div>
+                            </div>
+                            <div class="simplebar-track horizontal" style="visibility: hidden;">
+                                <div class="simplebar-scrollbar"></div>
+                            </div>
+                            <div class="simplebar-scroll-content" style="padding-right: 17px; margin-bottom: -34px;">
+                                <div class="simplebar-content" style="padding-bottom: 17px; margin-right: -17px;">
+                                    <div class="timeline-innr">
+                                        <div class="timeline">
+                                            <div class="timeline-line"></div>
+                                            <div class="timeline-item">
+                                                <div class="timeline-time"></div>
+                                                <div class="timeline-content">
+                                                    <p>Each member have a unique TWZ</p><span
+                                                    class="timeline-content-info">Data de Adição</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item success">
+                                                <div class="timeline-time"></div>
+                                                <div class="timeline-content">
+                                                    <p>Título do Lívros</p><span
+                                                        class="timeline-content-info">Data de Adição</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item secondary">
+                                                <div class="timeline-time"></div>
+                                                <div class="timeline-content">
+                                                    <p>Título do Lívros</p><span
+                                                        class="timeline-content-info">Data de Adição</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-load"><a href="" class="link load-timeline" data-target="timeline-notify"
+                                data-show="2">VER TODOS</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .row -->
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="token-sale-graph card card-full-height">
+                <div class="card-innr">
+                    <div class="card-head has-aside">
+                        <h4 class="card-title">Acessos aos sistema</h4>
+                        <div class="card-opt"><a href="#" class="link ucap link-light toggle-tigger toggle-caret">7
+                                Dias</a>
+                            <div class="toggle-class dropdown-content">
+                                <ul class="dropdown-list">
+                                    <li><a href="#">30 dias</a></li>
+                                    <li><a href="#">1 Ano</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-tokensale"><iframe class="chartjs-hidden-iframe" tabindex="-1"
+                            style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe><canvas
+                            id="tknSale" width="670" height="190"
+                            style="display: block; width: 670px; height: 190px;"></canvas></div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+    </div><!-- .row -->
+</div>

@@ -16,7 +16,10 @@ router.post('/', (req, res)=>{
       phone: req.body.phone,
       address: req.body.address,
       password: req.body.password,
-      gender: req.body.gender
+      gender: req.body.gender,
+      nip: req.body.nip,
+      patent: req.body.patent
+
     };
 
     var rules = validationRules.users.create;

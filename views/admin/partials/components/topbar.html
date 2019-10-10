@@ -1,0 +1,59 @@
+<div class="topbar is-sticky">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="topbar-nav d-lg-none">
+                <li class="topbar-nav-item relative">
+                    <a class="toggle-nav" href="#">
+                        <div class="toggle-icon">
+                            <span class="toggle-line"></span>
+                            <span class="toggle-line"></span>
+                            <span class="toggle-line"></span>
+                            <span class="toggle-line"></span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="topbar-logo">
+                <img src="/img/rn_logo.png" srcset="/img/rn_logo2x.png">
+            </div>
+            <ul class="topbar-nav">
+                <li class="topbar-nav-item relative">
+                    <span class="user-welcome d-none d-lg-inline-block">Bem-Vindo, <%=log.name%></span>
+                    <a class="toggle-tigger user-thumb" href="javascript:void(0)">
+                        <em class="ti ti-user"></em>
+                    </a>
+                    <div class="toggle-class dropdown-content dropdown-content-right dropdown-arrow-right user-dropdown">
+                        <div class="user-status">
+                            <h6 class="user-status-title">Administrador</h6>
+                            <div class="user-status-balance"><%=log.name%></div>
+                        </div>
+                        <ul class="user-links">
+                            <li>
+                                <a href="/admin/profile">
+                                    <i class="ti ti-id-badge"></i> Meu Perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/profile/edit">
+                                    <i class="ti ti-pencil"></i> 
+                                    Editar Perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/changepass">
+                                    <i class="ti ti-lock"></i> 
+                                    Mudar Palavra-passe
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="user-links bg-light">
+                            <li>
+                                <a href="/logout"><i class="ti ti-power-off"></i> Sair</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="card content-area">
+        <div class="card-innr">
+            <div class="row">
+                <form method="POST">
+                    <div class="col-xl-12 col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Pesquisar Por:</span>
+                            </div>
+                            <select class="custom-select" name="searchBy">
+                                <option selected>Selecionar...</option>
+                                <option value="genre">Género</option>
+                                <option value="title">Título</option>
+                                <option value="author">Autor</option>
+                                <option value="publisher">Editora</option>
+                                <option value="edition">Edição</option>
+                                <option value="isbn">ISBN</option>
+                                <option value="pages">Páginas</option>
+                            </select>
+                            <div class="input-group-prepend">
+                                <input placeholder="Escrever aqui..." class="form-control" 
+                                style="height: auto !important;
+                                border-radius: 0px !important;" name="word">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm" 
+                            style="background: #0059df;
+                            border-color: #0059df;
+                            border-radius: 0px 4px 4px 0px !important;">
+                                <i class="ti ti-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr>
+            <div class="card-head">
+                <h4 class="card-title">TODOS LÍVROS</h4>
+            </div>
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="table-wrap">
+                    <table class="data-table dt-init user-tnx dataTable no-footer" id="DataTables_Table_0" role="grid"
+                        aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr class="data-item data-head" role="row">
+                                <th class="data-col dt-tnxno sorting_disabled" rowspan="1" colspan="1">ID</th>
+                                <th class="data-col dt-tnxno sorting_disabled" rowspan="1" colspan="1">Género</th>
+                                <th class="data-col dt-token sorting_disabled" rowspan="1" colspan="1">Título</th>
+                                <th class="data-col dt-amount sorting_disabled" rowspan="1" colspan="1">Autor</th>
+                                <th class="data-col dt-usd-amount sorting_disabled" rowspan="1" colspan="1">Editora
+                                </th>
+                                <th class="data-col dt-account sorting_disabled" rowspan="1" colspan="1">Edição</th>
+                                <th class="data-col dt-type sorting_disabled" rowspan="1" colspan="1">
+                                    <div class="dt-type-text">ISBN</div>
+                                </th>
+                                <th class="data-col sorting_disabled" rowspan="1" colspan="1">Páginas</th>
+                                <th class="data-col sorting_disabled" rowspan="1" colspan="1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(var i=0; i< res.length; i++){%>
+                                <tr class="data-item odd" role="row">
+                                    <td class="data-col dt-tnxno">
+                                        <div class="d-flex align-items-center">
+                                            <div class="fake-class"><span class="lead tnx-id text-center"><%=res[i].book_id%></span></div>
+                                        </div>
+                                    </td>
+                                    <td class="data-col dt-tnxno">
+                                        <div class="d-flex align-items-center">
+                                            <div class="fake-class"><span class="lead tnx-id"><%=res[i].genre%></span></div>
+                                        </div>
+                                    </td>
+                                    <td class="data-col dt-token"><span class="lead token-amount"><%=res[i].title%></span></td>
+                                    <td class="data-col dt-amount"><span class="lead amount-pay"><%=res[i].author%></span></td>
+                                    <td class="data-col dt-usd-amount"><span class="lead amount-pay"><%=res[i].publisher%></span></td>
+                                    <td class="data-col dt-account"><span class="lead user-info text-center"><%=res[i].edition%></span></td>
+                                            <td class="data-col dt-account"><span class="lead user-info"><%=res[i].isbn%></span></td>
+                                    <td class="data-col dt-account"><span class="lead user-info text-center"><%=res[i].pages%></span></td>
+                                    <td class="data-col text-right">
+                                        <ul class="data-action-list d-none d-md-inline-flex">
+                                            <%if(res[i].user_id){%>
+                                                <li><a href="/admin/books/edit/<%=res[i].book_id%>" class="btn btn-auto btn-success btn-xs">
+                                                    <em class="ti ti-pencil-alt"></em>
+                                                </a></li>
+                                                <li><a href="/admin/books/delete/<%=res[i].book_id%>" class="btn btn-danger-alt btn-xs btn-icon">
+                                                    <em class="ti ti-trash"></em>
+                                                </a></li>
+                                            <%}else{%>
+                                                <li><a href="/admin/books/<%=res[i].book_id%>/issue" class="btn btn-auto btn-warning btn-xs">
+                                                    <em class="ti ti-share"></em>
+                                                </a></li>
+                                                <li><a href="/admin/books/edit/<%=res[i].book_id%>" class="btn btn-auto btn-success btn-xs">
+                                                    <em class="ti ti-pencil-alt"></em>
+                                                </a></li>
+                                                <li><a href="/admin/books/edit/<%=res[i].book_id%>" class="btn btn-danger-alt btn-xs btn-icon">
+                                                    <em class="ti ti-trash"></em>
+                                                </a></li>
+                                            <%}%>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-9">
+                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"></div>
+                    </div>
+                    <div class="col-md-3 text-left text-md-right">
+                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- .card-innr -->
+    </div><!-- .card -->
+</div>

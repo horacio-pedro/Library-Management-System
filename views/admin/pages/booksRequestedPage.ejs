@@ -1,0 +1,57 @@
+<div class="container">
+        <div class="card content-area">
+            <div class="card-innr">
+                <div class="card-head">
+                    <h4 class="card-title">LIVROS SOLICITADOS</h4>
+                </div>
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div class="table-wrap">
+                        <table class="data-table dt-init user-tnx dataTable no-footer" id="DataTables_Table_0" role="grid"
+                            aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                                <tr class="data-item data-head" role="row">
+                                    <th class="data-col dt-tnxno sorting_disabled" rowspan="1" colspan="1">ID</th>
+                                    <th class="data-col dt-tnxno sorting_disabled" rowspan="1" colspan="1">Género</th>
+                                    <th class="data-col dt-token sorting_disabled" rowspan="1" colspan="1">Título</th>
+                                    <th class="data-col dt-amount sorting_disabled" rowspan="1" colspan="1">Autor</th>
+                                    <th class="data-col dt-usd-amount sorting_disabled" rowspan="1" colspan="1">Edition
+                                    </th>
+                                    <th class="data-col sorting_disabled text-center" rowspan="1" colspan="1">ISBN</th>
+                                    <th class="data-col sorting_disabled text-center" rowspan="1" colspan="1">Data de Requisição</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for(var i=0; i< res.length; i++){%>
+                                    <tr class="data-item odd" role="row">
+                                        <td class="data-col dt-tnxno">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fake-class"><span class="lead tnx-id text-center"><%=res[i].request_id%></span></div>
+                                            </div>
+                                        </td>
+                                        <td class="data-col dt-tnxno">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fake-class"><span class="lead tnx-id"><%=res[i].genre%></span></div>
+                                            </div>
+                                        </td>
+                                        <td class="data-col dt-token"><span class="lead token-amount"><%=res[i].title%></span></td>
+                                        <td class="data-col dt-amount"><span class="lead amount-pay"><%=res[i].author%></span></td>
+                                        <td class="data-col dt-usd-amount"><span class="lead amount-pay"><%=res[i].edition%></span></td>
+                                        <td class="data-col dt-account"><span class="lead user-info text-center"><%=res[i].isbn%> </span></td>
+                                        <td class="data-col dt-account"><span class="lead user-info text-center"><%=res[i].date%></span></td>
+                                    </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-9">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"></div>
+                        </div>
+                        <div class="col-md-3 text-left text-md-right">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card-innr -->
+        </div><!-- .card -->
+    </div>

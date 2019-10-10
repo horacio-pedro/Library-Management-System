@@ -8,8 +8,8 @@ var validateUser = (email, password, callback) => {
 };
 
 var createUser = (user, callback) => {
-    var sql = "INSERT INTO users VALUES(null, ?, ?, ?, ?, ?, ?, ?)";
-    db.executeQuery(sql, [user.name, user.phone, user.email, 0, user.password, user.address, user.gender], function(result) {
+    var sql = "INSERT INTO users VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.executeQuery(sql, [user.name, user.phone, user.email, 0, user.password, user.address, user.gender, user.nip, user.patent], function(result) {
         callback(result);
     });
 };
@@ -22,8 +22,8 @@ var getUser = (id, callback) => {
 };
 
 var updateUser = (user, callback) => {
-    var sql = "UPDATE users SET name = ?, email = ?, phone = ?, address = ?, gender = ? WHERE user_id = ?";
-    db.executeQuery(sql, [user.name, user.email, user.phone, user.address, user.gender, user.user_id], function(result) {
+    var sql = "UPDATE users SET name = ?, email = ?, phone = ?, address = ?, gender = ?, nip = ?, patent = ? WHERE user_id = ?";
+    db.executeQuery(sql, [user.name, user.email, user.phone, user.address, user.gender, user.nip, user.patent, user.user_id], function(result) {
         callback(result);
     });
 };
@@ -50,8 +50,8 @@ var searchBy = (searchBy, word, callback) => {
 };
 
 var updateCustomer = (id, customer, callback) => {
-    var sql = "UPDATE users SET name = ?, email = ?, phone = ?, address = ?, gender = ? WHERE user_id = ?";
-    db.executeQuery(sql, [customer.name, customer.email, customer.phone, customer.address, customer.gender, id], function(result) {
+    var sql = "UPDATE users SET name = ?, email = ?, phone = ?, address = ?, gender = ?, nip = ?, patent = ? WHERE user_id = ?";
+    db.executeQuery(sql, [customer.name, customer.email, customer.phone, customer.address, customer.gender, customer.nip, customer.patent, id], function(result) {
         callback(result);
     });
 };
@@ -82,6 +82,26 @@ var totalBooksBorrowedByCustomer = (id, callback) => {
     });
 };
 
+var getUserRead = (id, callback) => {
+    var sql = "SELECT * FROM e-books WHERE user_id = ?";
+    db.executeQuery(sql, [id], function(result) {
+        callback(result);
+    });
+};
+var getUserReadHistory = (id, callback) => {
+    var sql = "SELECT read_data.user_id, read_data.e-book_id, e-books.title, e-books.author, e-books.publisher, e-books.edition, e-books.isbn, e-books.file, read_date.date FROM read_date INNER JOIN e-books ON read_date.e-book_id=e-books.e-book_id WHERE read_date.user_id=?";
+    db.executeQuery(sql, [id], function(result) {
+        callback(result);
+    });
+};
+
+var totalEBooksReadByCustomer = (id, callback) => {
+    var sql = "SELECT e-books.*, read_date.e-book_id FROM read_date INNER JOIN e-books ON read_date.e-book_id=e-books.e-book_id WHERE read_date.user_id = ?";
+    db.executeQuery(sql, [id], function(result) {
+        callback(result);
+    });
+};
+
 
 module.exports = {
     validateUser,
@@ -95,5 +115,8 @@ module.exports = {
     deleteUser,
     getUserBorrow,
     getUserHistory,
-    totalBooksBorrowedByCustomer
+    totalBooksBorrowedByCustomer,
+    getUserRead,
+    getUserReadHistory,
+    totalEBooksReadByCustomer
 };

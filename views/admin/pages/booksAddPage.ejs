@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="content-area card">
+                <div class="card-innr card-innr-fix">
+                    <div class="card-head">
+                        <h6 class="card-title">Adicionar Novo Lívro</h6>
+                    </div>
+                    <div class="gaps-1x"></div><!-- .gaps -->
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label">
+                                    <label class="input-item-label text-exlight">Título</label>
+                                    <div class="relative"><span class="input-icon input-icon-left">
+                                            <em class="ti ti-book"></em></span>
+                                        <input class="input-bordered" type="text" name="title" value="<%=data.title%>"></div>
+                                    </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label">
+                                    <label class="input-item-label text-exlight">Autor</label>
+                                    <div class="relative"><span class="input-icon input-icon-left">
+                                            <em class="ti ti-user"></em></span>
+                                        <input class="input-bordered" type="text" name="author" value="<%=data.author%>"></div>
+                                    </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label"><label
+                                        class="input-item-label text-exlight">Género</label>
+                                    <div class="relative"><span class="input-icon input-icon-left"><em
+                                                class="ti ti-bookmark-alt"></em></span>
+                                                <input class="input-bordered" type="text" name="genre" value="<%=data.genre%>"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label">
+                                    <label class="input-item-label text-exlight">Editora</label>
+                                    <div class="relative"><span class="input-icon input-icon-left">
+                                            <em class="ti ti-stamp"></em></span>
+                                        <input class="input-bordered" type="text" name="publisher" value="<%=data.publisher%>"></div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label"><label
+                                        class="input-item-label text-exlight">ISBN</label>
+                                    <div class="relative"><span class="input-icon input-icon-left">
+                                        <em class="ti ti-key"></em></span>
+                                        <input class="input-bordered" type="text" name="isbn" value="<%=data.isbn%>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label">
+                                    <label class="input-item-label text-exlight">Edição</label>
+                                    <div class="relative"><span class="input-icon input-icon-left">
+                                        <em class="ti ti-world"></em></span>
+                                        <input class="input-bordered" type="number" name="edition" value="<%=data.edition%>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label">
+                                    <label class="input-item-label text-exlight">Páginas</label>
+                                    <div class="relative"><span class="input-icon input-icon-left">
+                                            <em class="ti ti-files"></em></span>
+                                        <input class="input-bordered" type="number" name="pages" value="<%=data.pages%>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-item input-with-label"><label
+                                        class="input-item-label text-exlight">&nbsp;</label>
+                                    <input class="input-bordered" type="text" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gaps-1x"></div><button type="submit" class="btn btn-primary">Adicionar</button>
+                    </form>
+                </div><!-- .card-innr -->
+            </div><!-- .card -->
+        </div>
+    </div>
+</div>

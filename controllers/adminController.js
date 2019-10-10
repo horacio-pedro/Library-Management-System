@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var userModel = require.main.require('./models/User');
 var bookModel = require.main.require('./models/Book');
+var eBookModel = require.main.require('./models/E-Book');
 var validationRules = require.main.require('./config/validation_rules/rules');
 var asyncValidator = require('async-validator-2');
 
-router.get('/home', (req, res)=> {
+router.get('/dashboard', (req, res)=> {
     // var users = "";
     userModel.getAll((users)=> {
         if(!users){
@@ -37,7 +38,15 @@ router.get('/home', (req, res)=> {
                                                     res.send("no borrowed books");
                                                 }
                                                 else {
-                                                    res.render('admin/home', {usr: users.length, bk: books.length, brwd: borrowed.length, mb: mostBorrowed.length, mrb: mostRequested, mbb: mostBorrowedBook});
+                                                    var admin = userModel.getUser(req.session.admin, (result)=> {
+                                                        if(!result){
+                                                            res.send("invalid!");
+                                                        }
+                                                        else {
+                                                            console.log(result);
+                                                            res.render('admin/dashboard', {usr: users.length, bk: books.length, brwd: borrowed.length, mb: mostBorrowed.length, mrb: mostRequested, mbb: mostBorrowedBook, log: result});
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
@@ -61,7 +70,7 @@ router.get('/profile', (req, res)=> {
         }
         else {
             console.log(result);
-            res.render('admin/profile', {res: result});
+            res.render('admin/profile', {res: result, log: result});
         }
     });
 });
@@ -73,7 +82,7 @@ router.get('/profile/edit', (req, res)=> {
         }
         else {
             console.log(result);
-            res.render('admin/profile-edit', {res: result, errs: []});
+            res.render('admin/profile-edit', {res: result, log: result, errs: []});
         }
     });
 });
@@ -115,12 +124,13 @@ router.get('/changepass', (req, res)=> {
         }
         else {
             console.log(result);
-            res.render('admin/change-password', {res: result, errs: [], success: []});
+            res.render('admin/change-password', {res: result, log: result, errs: [], success: []});
         }
     });
 });
 
 router.post('/changepass', (req, res)=> {
+    var logName = req.session.admin;
     var rules = validationRules.users.changePassword;
     var validator = new asyncValidator(rules);
     var data = {
@@ -138,22 +148,46 @@ router.post('/changepass', (req, res)=> {
                             res.send('invalid');
                         }
                         else {
-                            res.render('admin/change-password', {errs:[], res: [], success: [{message: "Password changed successfully"}]});
+                            userModel.getUser(logName, (showLog) =>{
+                                if(!showLog){
+                                    res.send("DADOS INVÁLIDOS: Contacte o administrador");
+                                }else{
+                                    res.render('admin/change-password', {errs:[], log: showLog, res: [], success: [{message: "Palavra passe alterada com sucesso"}]});
+                                }
+                            });
                         }
                     });
                 }
                 else {
-                    res.render('admin/change-password', {errs:[{message: "Your new passwords don't match!"}], res: [], success: []});
+                    userModel.getUser(logName, (showLog) =>{
+                        if(!showLog){
+                            res.send("DADOS INVÁLIDOS: Contacte o administrador");
+                        }else{
+                            res.render('admin/change-password', {errs:[{message: "As novas palavras-passe não coincidem!"}], res: [], log: showLog, success: []});
+                        }
+                    });
                 }
             }
             else {
-                console.log(fields);
-                res.render('admin/change-password', {errs: errors, res: [], success: []});
+                userModel.getUser(logName, (showLog) =>{
+                    if(!showLog){
+                        res.send("DADOS INVÁLIDOS: Contacte o administrador");
+                    }else{
+                        console.log(fields, showLog);
+                        res.render('admin/change-password', {errs: errors, log: showLog, res: [], success: []});
+                    }
+                });
             }
         });
     }
     else {
-        res.render('admin/change-password', {errs: [{message: "Your old passsword does not match!"}], res: [], success: []});
+        userModel.getUser(logName, (showLog) =>{
+            if(!showLog){
+                res.send("DADOS INVÁLIDOS: Contacte o administrador");
+            }else{
+                res.render('admin/change-password', {errs: [{message: "A actual palavra-passe está incorrecta!"}], log: showLog, res: [], success: []});
+            }
+        });
     }
 
 });
@@ -164,8 +198,14 @@ router.get('/books', (req, res)=> {
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/books', {res: result, errs: []});
+            userModel.getUser(req.session.admin, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/books', {res: result, log: showLog, errs: []});
+                }
+            });
         }
     });
 });
@@ -173,30 +213,45 @@ router.get('/books', (req, res)=> {
 router.post('/books', (req, res)=> {
     var searchBy = req.body.searchBy;
     var word = req.body.word;
+    var logName = req.session.admin;
     bookModel.searchBy(searchBy, word, (result)=> {
         if(!result){
-            res.render('admin/books', {res: [], errs: [{message: "No results found!"}]});
+            res.render('admin/books', {res: [], errs: [{message: "Nenhum resultado encontrado!"}]});
         }
         else {
-            console.log(result);
-            res.render('admin/books', {res: result, errs: []})
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/books', {res: result, log: showLog, errs: []});
+                }
+            });
         }
     });
 });
 
 router.get('/customers', (req, res)=> {
+    var logName = req.session.admin;
     userModel.getAll((result)=> {
         if(!result){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/customers', {res: result, errs: []});
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/customers', {res: result, log: showLog, errs: []});
+                }
+            });
         }
     });
 });
 
 router.post('/customers', (req, res)=> {
+    var logName = req.session.admin;
     var searchBy = req.body.searchBy;
     var word = req.body.word;
     userModel.searchBy(searchBy, word, (result)=> {
@@ -204,24 +259,40 @@ router.post('/customers', (req, res)=> {
             res.render('admin/customers', {res: [], errs: [{message: "No results found!"}]});
         }
         else {
-            console.log(result);
-            res.render('admin/customers', {res: result, errs: []})
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/customers', {res: result, log: showLog, errs: []});
+                }
+            });
         }
     });
 });
 
 router.get('/customers/add', (req, res)=> {
-    res.render('admin/customers-add', {errs: [], success: [], data: []});
+    var logName = req.session.admin;
+    userModel.getUser(logName, (showLog) =>{
+        if(!showLog){
+            res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+        }else{
+            res.render('admin/customers-add', {errs: [], log: showLog, success: [], data: []});
+        }
+    });
 });
 
 router.post('/customers/add', (req, res)=> {
+    var logName = req.session.admin;
     var data = {
         name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
         password: req.body.password,
         address: req.body.address,
-        gender: req.body.gender
+        gender: req.body.gender,
+        nip: req.body.nip,
+        patent: req.body.patent
     };
 
     var rules = validationRules.users.create;
@@ -231,26 +302,53 @@ router.post('/customers/add', (req, res)=> {
         if(!errors){
             userModel.createUser(data, (result)=> {
                 if(!result){
-                    res.send("Invalid");
+                    userModel.getUser(logName, (showLog) =>{
+                        if(!showLog){
+                            res.send("")
+                        }else{
+                            res.render('admin/customers-add', {log: showLog, errs: [{message: "Já existe um Utilizador com este NIP no sistema"}], data: []});
+                        }
+                    });
                 }
                 else {
-                    console.log(result);
-                    res.render('admin/customers-add', {errs: [], success: [{message: "Customer added successfully!"}], data: []});
+                    userModel.getUser(logName, (showLog) =>{
+                        if(!showLog){
+                            res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                        }else{
+                            console.log(result, showLog);
+                            res.render('admin/customers-add', {errs: [], log: showLog, success: [{message: "Utilizador Adicionado com sucesso!"}], data: []});
+                        }
+                    });
                 }
             });
         }
         else {
-            console.log(fields);
-            res.render('admin/customers-add', {errs: errors, success: [], data});
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(fields, showLog);
+                    res.render('admin/customers-add', {errs: errors, log: showLog, success: [], data});
+                }
+            });
         }
     });
 });
 
 router.get('/books/add', (req, res)=> {
-    res.render('admin/books-add', {errs: [], success: [], data: []});
+    var logName = req.session.admin;
+    userModel.getUser(logName, (showLog) => {
+        if(!showLog){
+            res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+        }else{
+            console.log(showLog);
+            res.render('admin/books-add', {log: showLog, errs: [], success: [], data: []});
+        }
+    });
 });
 
 router.post('/books/add', (req, res)=> {
+    var logName = req.session.admin;
     var data = {
         genre: req.body.genre,
         title: req.body.title,
@@ -271,31 +369,52 @@ router.post('/books/add', (req, res)=> {
                     res.send("Invalid");
                 }
                 else {
-                    console.log(result);
-                    res.render('admin/books-add', {errs: [], success: [{message: "Book added successfully!"}], data: []});
+                    userModel.getUser(logName, (showLog) => {
+                        if(!showLog){
+                            res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                        }else{
+                            console.log(result, showLog);
+                            res.render('admin/books-add', {errs: [], log: showLog, success: [{message: "Book added successfully!"}], data: []});
+                        }
+                    });
                 }
             });
         }
         else {
-            console.log(fields);
-            res.render('admin/books-add', {errs: errors, success: [], data});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(fields, logName);
+                    res.render('admin/books-add', {errs: errors, log: showLog, success: [], data});
+                }
+            });
         }
     });
 });
 
 router.get('/books/edit/:id', (req, res)=> {
+    var logName = req.session.admin;
     var book = req.params.id;
     bookModel.getBook(book, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            res.render('admin/books-edit', {res: result, errs: [], success: []});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(logName);
+                    res.render('admin/books-edit', {res: result, log: showLog, errs: [], success: []});
+                }
+            });
         }
     });
 });
 
 router.post('/books/edit/:id', (req, res)=> {
+    var logName = req.session.admin;
     var data = {
         genre: req.body.genre,
         title: req.body.title,
@@ -317,32 +436,53 @@ router.post('/books/edit/:id', (req, res)=> {
                     res.send("Invalid");
                 }
                 else {
-                    console.log(result);
-                    res.render('admin/books-edit', {res: result, errs:[], success: [{message: "Book updated successfully!"}]});
+                    userModel.getUser(logName, (showLog) => {
+                        if(!showLog){
+                            res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                        }else{
+                            console.log(result, showLog);
+                            res.render('admin/books-edit', {res: result, log: showLog, errs:[], success: [{message: "Book updated successfully!"}]});
+                        }
+                    });
                 }
             });
         }
         else {
-            console.log(fields);
-            res.render('admin/books-edit', {res: data, errs: errors, success: []})
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(fields, showLog);
+                    res.render('admin/books-edit', {res: data, log: showLog, errs: errors, success: []})
+                }
+            });
         }
     });
 
 });
 
 router.get('/customers/edit/:id', (req, res)=> {
+    var logName = req.session.admin;
     var customer = req.params.id;
     userModel.getUser(customer, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            res.render('admin/customers-edit', {res: result, errs: [], success: []});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(showLog);
+                    res.render('admin/customers-edit', {res: result, log: showLog, errs: [], success: []});
+                }
+            });
         }
     });
 });
 
 router.post('/customers/edit/:id', (req, res)=> {
+    var logName = req.session.admin;
     var data = {
         name: req.body.name,
         email: req.body.email,
@@ -363,97 +503,152 @@ router.post('/customers/edit/:id', (req, res)=> {
                     res.send("Invalid");
                 }
                 else {
-                    console.log(result);
-                    res.render('admin/customers-edit', {res: result, errs:[], success: [{message: "Customer updated successfully!"}]});
+                    userModel.getUser(logName, (showLog) => {
+                        if(!showLog){
+                            res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                        }else{
+                            console.log(result, showLog);
+                            res.render('admin/customers-edit', {res: result, log: showLog, errs:[], success: [{message: "Customer updated successfully!"}]});
+                        }
+                    });
                 }
             });
         }
         else {
-            console.log(fields);
-            res.render('admin/customers-edit', {res: data, errs: errors, success: []});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(fields, showLog);
+                    res.render('admin/customers-edit', {res: data, log: showLog, errs: errors, success: []});
+                }
+            });
         }
     });
 
 });
 
 router.get('/customers/profile/:id', (req, res)=> {
+    var logName = req.session.admin;
     var id = req.params.id;
     var customer = userModel.getUser(id, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/customers-profile', {res: result});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/customers-profile', {res: result, log: showLog});
+                }
+            });
         }
     });
 });
 
 router.get('/customers/delete/:id', (req, res)=> {
+    var logName = req.session.admin;
     var id = req.params.id;
     var customer = userModel.getUser(id, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/customers-delete', {res: result});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/customers-delete', {res: result, log: showLog});
+                }
+            });
         }
     });
 });
 
 router.post('/customers/delete/:id', (req, res)=> {
+    var logName = req.session.admin;
     var id = req.body.user_id;
     var customer = userModel.deleteUser(id, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.redirect('/admin/customers');
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!");
+                }else{
+                    console.log(result, showLog);
+                    res.redirect('/admin/customers', {log: showLog});
+                }
+            });
         }
     });
 });
 
 router.get('/books/delete/:id', (req, res)=> {
+    var logName = req.session.admin;
     var id = req.params.id;
     var book = bookModel.getBook(id, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/books-delete', {res: result});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!");
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/books-delete', {res: result, log: showLog});
+                }
+            })
         }
     });
 });
 
 router.post('/books/delete/:id', (req, res)=> {
+    var logName = req.session.admin;
     var id = req.body.book_id;
     var book = bookModel.deleteBook(id, (result)=> {
         if(result.length == 0){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.redirect('/admin/books');
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                }else{
+                    console.log(result, showLog);
+                    res.redirect('/admin/books', {log: showLog});
+                }
+            })
         }
     });
 });
 
 router.get('/books/:id/issue', (req, res)=> {
+    var logName = req.session.admin;
     userModel.getAll((result)=> {
         if(!result){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/books-issue', {res: result, errs: [], success: []});
+            userModel.getUser(logName, (showLog) => {
+                if(!showLog){
+                    res.send("huuhhuioio")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/books-issue', {res: result, log: showLog, errs: [], success: []});
+                }
+            })
         }
     });
 });
 
 router.post('/books/:id/issue', (req, res)=> {
+    var logName = req.session.admin;
     var book_id = req.params.id;
     var customer_id = req.body.user_id;
 
@@ -469,7 +664,13 @@ router.post('/books/:id/issue', (req, res)=> {
                         res.send("Invalid");
                     }
                     else {
-                        console.log(result);
+                        userModel.getUser(logName, (showLog) => {
+                            if(!showLog){
+                                res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                            }else{
+                                console.log(result, showLog);
+                            }
+                        });
                     }
                 });
                 bookModel.issueBook(book_id, customer_id, (result)=> {
@@ -477,8 +678,14 @@ router.post('/books/:id/issue', (req, res)=> {
                         res.send("Invalid");
                     }
                     else {
-                        console.log(result);
-                        res.redirect('/admin/books');
+                        userModel.getUser(logName, (showLog) => {
+                            if(!showLog){
+                                res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!");
+                            }else{
+                                console.log(result, showLog);
+                                res.redirect('/admin/books', {log: showLog});
+                            }
+                        });
                     }
                 });
             }
@@ -488,8 +695,14 @@ router.post('/books/:id/issue', (req, res)=> {
                         res.send("Invalid");
                     }
                     else {
-                        console.log(result);
-                        res.render('admin/books-issue', {res: result, errs: [{message: "This customer has already issued 3 books, please unissue one first!"}], success: []});
+                        userModel.getUser(logName, (showLog) => {
+                            if(!showLog){
+                                res.send("DADOS INVÁLIDOS: Contacte o Administrador do sistema!")
+                            }else{
+                                console.log(result, showLog);
+                                res.render('admin/books-issue', {res: result, log: showLog, errs: [{message: "This customer has already issued 3 books, please unissue one first!"}], success: []});
+                            }
+                        })
                     }
                 });
             }
@@ -498,43 +711,65 @@ router.post('/books/:id/issue', (req, res)=> {
 });
 
 router.get('/books/issued', (req, res)=> {
+    var logName = req.session.admin;
     bookModel.getAll((result)=> {
         if(!result){
             res.send("Invalid!");
         }
         else {
-            console.log(result);
-            res.render('admin/issued-books', {res: result});
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sitema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/issued-books', {res: result, log: showLog});
+                }
+            })
         }
     });
 });
 
 router.post('/books/issued', (req, res)=> {
+    var logName = req.session.admin;
     var book_id = req.body.book_id;
     bookModel.unissueBook(book_id, (result)=> {
         if(!result){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.redirect('/admin/books');
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sitema!")
+                }else{
+                    console.log(result, showLog);
+                    res.redirect('/admin/books', {log: showLog});
+                }
+            })
         }
     });
 });
 
 router.get('/books/requested', (req, res)=> {
+    var logName = req.session.admin;
     bookModel.getRequestedBooks((result)=> {
         if(!result){
             res.send("Invalid");
         }
         else {
-            console.log(result);
-            res.render('admin/books-requested', {res: result, errs: []});
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sitema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/books-requested', {res: result, log: showLog, errs: []});
+                }
+            })
         }
     });
 });
 
 router.post('/books/requested', (req, res)=> {
+    var logName = req.session.admin;
     var searchBy = req.body.searchBy;
     var word = req.body.word;
     bookModel.bookRequestSearch(searchBy, word, (result)=> {
@@ -542,8 +777,14 @@ router.post('/books/requested', (req, res)=> {
             res.render('admin/books-requested', {res: [], errs: [{message: "No results found!"}]});
         }
         else {
-            console.log(result);
-            res.render('admin/books-requested', {res: result, errs: []})
+            userModel.getUser(logName, (showLog) =>{
+                if(!showLog){
+                    res.send("DADOS INVÁLIDOS: Contacte o Administrador do sitema!")
+                }else{
+                    console.log(result, showLog);
+                    res.render('admin/books-requested', {res: result, log: showLog, errs: []});
+                }
+            })
         }
     });
 });

@@ -3,7 +3,7 @@ const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'Pw1234',
-  database : 'library_management_system'
+  database : 'readnow'
 });
 
 module.exports = {

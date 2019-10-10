@@ -1,0 +1,101 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 aside sidebar-left">
+            <div class="card card-navs">
+                <div class="card-innr">
+                    <div class="card-head d-none d-lg-block">
+                        <h6 class="card-title card-title-md">Gestão de Utilizador</h6>
+                    </div>
+                    <ul class="sidebar-nav">
+                        <li><a href="/admin/profile"><em class="ikon ikon-user"></em> Meu Perfil</a></li>
+                        <li><a href="/admin/customers"><em class="ikon ikon-coins"></em> Utilizardores</a></li>
+                        <li><a href="/admin/profile/edit"><em class="ikon ikon-lte"></em> Editar Perfil</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 main-content">
+            <div class="card content-area">
+                <div class="card-innr">
+                    <div class="card-head">
+                        <h4 class="card-title">Adicionar Uitlizador</h4>
+                    </div>
+                    <form method="POST">
+                        <input type="hidden" name="user_id" value="<%= data.user_id%>" hidden>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="full-name" class="input-item-label">Nome Completo</label>
+                                    <input type="text" class="input-bordered" value="<%= data.name%>" name="name">
+                                </div>
+                                <!-- .input-item -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="email-address" class="input-item-label">Email</label>
+                                    <input type="email" class="input-bordered" value="<%= data.email%>" name="email">
+                                </div>
+                                <!-- .input-item -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="mobile-number" class="input-item-label">Número Telemóvel</label>
+                                    <input type="tel" class="input-bordered" value="<%= data.phone%>" name="phone">
+                                </div><!-- .input-item -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="nip" class="input-item-label">NIP</label>
+                                    <input type="number" class="input-bordered" value="<%= data.nip%>" name="nip">
+                                </div><!-- .input-item -->
+                            </div><!-- .col -->
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="patent" class="input-item-label">Patente</label>
+                                    <input type="text" class="input-bordered" value="<%= data.patent%>" name="patent">
+                                </div><!-- .input-item -->
+                            </div><!-- .col -->
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="gender" class="input-item-label">Género</label>
+                                    <select class="input-bordered" name="gender">
+                                        <option selected>Selecione Seu Género</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Femenino">Femenino</option>
+                                    </select>
+                                </div><!-- .input-item -->
+                            </div><!-- .col -->
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="date-of-birth" lass="input-item-label">Endereço</label>
+                                    <input type="text" class="input-bordered" value="<%= data.address%>" name="address">
+                                </div><!-- .input-item -->
+                            </div><!-- .col -->
+                            <div class="col-md-6">
+                                <div class="input-item input-with-label">
+                                    <label for="date-of-birth" lass="input-item-label">Palavra-passe</label>
+                                    <input type="password" class="input-bordered" value="<%= data.password%>" name="password">
+                                </div><!-- .input-item -->
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                        <div class="gaps-1x"></div><!-- 10px gap -->
+                        <div class="d-sm-flex justify-content-between align-items-center"><button type="submit"
+                                class="btn btn-success">Adicionar</button>
+                            <div class="gaps-2x d-sm-none"></div>
+                            <%for(var i=0; i<errs.length; i++){%>
+                                <span class="text-danger">
+                                    <em class="ti ti-na"></em> <%= errs[i].message; %>
+                                </span>
+                            <%}%>
+                            <%for(var i=0; i<success.length; i++){%>
+                                <span class="text-success">
+                                    <em class="ti ti-check-box"></em> <%= success[i].message; %>
+                                </span>
+                            <%}%>
+                        </div>
+                    </form><!-- form -->
+                </div><!-- .card-innr -->
+            </div><!-- .card -->
+        </div>
+    </div>
+</div>

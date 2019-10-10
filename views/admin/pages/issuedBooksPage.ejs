@@ -1,0 +1,86 @@
+<div class="container">
+        <div class="card content-area">
+            <div class="card-innr">
+                <div class="card-head">
+                    <h4 class="card-title">LIVROS EMITIDOS</h4>
+                </div>
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div class="table-wrap">
+                        <table class="data-table dt-init user-tnx dataTable no-footer" id="DataTables_Table_0" role="grid"
+                            aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                                <tr class="data-item data-head" role="row">
+                                    <th class="data-col dt-tnxno sorting_disabled" rowspan="1" colspan="1">ID</th>
+                                    <th class="data-col dt-tnxno sorting_disabled" rowspan="1" colspan="1">Género</th>
+                                    <th class="data-col dt-token sorting_disabled" rowspan="1" colspan="1">Título</th>
+                                    <th class="data-col dt-amount sorting_disabled" rowspan="1" colspan="1">Autor</th>
+                                    <th class="data-col dt-usd-amount sorting_disabled" rowspan="1" colspan="1">Editora
+                                    </th>
+                                    <th class="data-col sorting_disabled text-center" rowspan="1" colspan="1">Utilizador</th>
+                                    <th class="data-col sorting_disabled text-center" rowspan="1" colspan="1">Data Emição</th>
+                                    <th class="data-col sorting_disabled" rowspan="1" colspan="1">Restantes</th>
+                                    <th class="data-col sorting_disabled" rowspan="1" colspan="1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for(var i=0; i< res.length; i++){%>
+                                    <%if(res[i].user_id == null || res[i].user_id == 0){continue;}%>
+                                    <tr class="data-item odd" role="row">
+                                        <td class="data-col dt-tnxno">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fake-class"><span class="lead tnx-id text-center"><%=res[i].book_id%></span></div>
+                                            </div>
+                                        </td>
+                                        <td class="data-col dt-tnxno">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fake-class"><span class="lead tnx-id"><%=res[i].genre%></span></div>
+                                            </div>
+                                        </td>
+                                        <td class="data-col dt-token"><span class="lead token-amount"><%=res[i].title%></span></td>
+                                        <td class="data-col dt-amount"><span class="lead amount-pay"><%=res[i].author%></span></td>
+                                        <td class="data-col dt-usd-amount"><span class="lead amount-pay"><%=res[i].publisher%></span></td>
+                                        <td class="data-col dt-account"><span class="lead user-info text-center">
+                                            <a href="/admin/customers/profile/<%=res[i].user_id%>"><%=res[i].user_id%></a>
+                                        </span></td>
+                                        <td class="data-col dt-account"><span class="lead user-info text-center"><%=res[i].date_issued%></span></td>
+                                        <td class="data-col dt-account">
+                                            <span class="lead user-info text-center">
+                                                <%
+                                                    var date1 = new Date(res[i].date_issued);
+                                                    var date2 = new Date();
+                                                    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                                                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                                                    var leftValid = 30 - diffDays;
+                                                %>
+                                                <%=leftValid+" Days"%>
+                                            </span>
+                                        </td>
+                                        <td class="data-col text-right">
+                                            <ul class="data-action-list d-none d-md-inline-flex">
+                                                <form method="POST">
+                                                    <input type="hidden" name="book_id" value="<%=res[i].book_id%>" hidden>
+                                                    <li>
+                                                        <button type="submit" class="btn btn-auto btn-danger btn-xs">
+                                                        <em class="ti ti-na"></em> Remover emição
+                                                        </button>
+                                                    </li>
+                                                </form>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-9">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"></div>
+                        </div>
+                        <div class="col-md-3 text-left text-md-right">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card-innr -->
+        </div><!-- .card -->
+    </div>

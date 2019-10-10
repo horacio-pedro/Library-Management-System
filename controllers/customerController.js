@@ -5,13 +5,13 @@ var bookModel = require.main.require('./models/Book');
 var validationRules = require.main.require('./config/validation_rules/rules');
 var asyncValidator = require('async-validator-2');
 
-router.get('/home', (req, res)=> {
+router.get('/dashboard', (req, res)=> {
     userModel.totalBooksBorrowedByCustomer(req.session.customer, (booksBorrowed)=> {
         if(!booksBorrowed){
             res.send("nothing here");
         }
         else {
-            res.render('customer/home', {tbbbc: booksBorrowed.length});
+            res.render('customer/dashboard', {tbbbc: booksBorrowed.length});
         }
     });
 });
